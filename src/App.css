@@ -1,0 +1,21 @@
+#root {
+  max-width: 1280px;
+  margin:auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.timer{
+  height: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  background-color: white;
+  animation: timer 5s;
+}
+
+@keyframes timer {
+  to{
+    width: 0;
+  }
+}
+
