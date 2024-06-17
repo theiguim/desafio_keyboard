@@ -5,15 +5,24 @@ function App() {
 
   const [random, setRandom] = useState([]);
   const [showGame, setShowGame] = useState(false)
+  let timer = null
 
-  useEffect(()=>{
-    const  timer = setTimeout(()=>{
+  useEffect(() => {
+    timer = setTimeout(() => {
       setShowGame(false)
     }, 5000);
 
-    return ()=> clearTimeout(timer)
+    return () => clearTimeout(timer)
 
   }, [showGame])
+
+  useEffect(()=>{
+    window.addEventListener("keyup", compareF);
+
+    return ()=>{
+      window.removeEventListener("keyup", compareF)
+    }
+  }, [compareF])
 
   let globalArray = []
   let posicao = 0
@@ -34,28 +43,37 @@ function App() {
 
   function compareF(e) {
 
-   const keyPressed = e.key.toUpperCase();
-   console.log(random)
-   console.log(keyPressed)
+    const keyPressed = e.key.toUpperCase();
 
-// usando array do state
-   if(random[posicao] == keyPressed){
-    posicao++
-   }else{
-    alert("Você errou!")
-   }
+    console.log(random);
+    console.log(keyPressed);
+    // usando array do state
+    if (random[posicao] == keyPressed) {
+      posicao++
+      console.log(posicao)
+    }
 
-   if(random[5]==keyPressed){
-    alert("PARABÉNS!")
-   }
+    if (random[5] == keyPressed) {
+      alert("PARABÉNS!")
+      setShowGame(false)
+      clearTimeout(timer)
+    }
   }
 
   return (
     <>
-      <div className="container" onKeyUp={compareF}>
-        <p>{showGame && random.join(" | ")}</p>
-        <div className={showGame? "timer": ""}></div>
-        <button onClick={genRandom}>Iniciar</button>
+      <div className="container" >
+        {/* <p>{showGame && random.join(" | ")}</p> */}
+
+        <div>{showGame && random.map((item, idx)=>{
+          
+        return (<div key={idx} className={posicao > idx ? "posicao": ""}>{item}</div>)
+        
+        })}</div>
+     
+        <div className={showGame ? "timer" : ""}></div>
+
+        <button onClick={genRandom} className={showGame? "btn": ""}>Iniciar</button>
 
       </div>
     </>

@@ -5,6 +5,19 @@
   text-align: center;
 }
 
+.btn{
+  /* display: none; */
+}
+
+.posicao{
+  color: red;
+  background-color: blue;
+}
+.random{
+  background-color: orange;
+  color: white;
+}
+
 .timer{
   height: 10px;
   width: 100%;
