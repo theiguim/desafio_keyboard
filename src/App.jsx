@@ -5,7 +5,11 @@ function App() {
 
   const [random, setRandom] = useState([]);
   const [showGame, setShowGame] = useState(false)
+  const [posicao, setPosicao] = useState(0)
   let timer = null
+
+
+  let globalArray = []
 
   useEffect(() => {
     timer = setTimeout(() => {
@@ -16,16 +20,15 @@ function App() {
 
   }, [showGame])
 
-  useEffect(()=>{
+  useEffect(() => {
     window.addEventListener("keyup", compareF);
 
-    return ()=>{
+    return () => {
       window.removeEventListener("keyup", compareF)
     }
   }, [compareF])
 
-  let globalArray = []
-  let posicao = 0
+
 
   function genRandom() {
 
@@ -39,9 +42,13 @@ function App() {
     }
     setRandom(globalArray)
     setShowGame(true)
+    setPosicao(0)
   }
 
   function compareF(e) {
+
+
+
 
     const keyPressed = e.key.toUpperCase();
 
@@ -49,31 +56,36 @@ function App() {
     console.log(keyPressed);
     // usando array do state
     if (random[posicao] == keyPressed) {
-      posicao++
+      setPosicao(posicao + 1)
       console.log(posicao)
     }
 
     if (random[5] == keyPressed) {
-      alert("PARABÉNS!")
-      setShowGame(false)
-      clearTimeout(timer)
+      
+      setTimeout(()=>{
+        alert("PARABÉNS!");
+        setShowGame(false)
+        clearTimeout(timer)
+        setPosicao(0)
+      }, 200)
+     
+
+     
     }
   }
 
   return (
     <>
       <div className="container" >
-        {/* <p>{showGame && random.join(" | ")}</p> */}
+        <div>{showGame && random.map((item, idx) => {
 
-        <div>{showGame && random.map((item, idx)=>{
-          
-        return (<div key={idx} className={posicao > idx ? "posicao": ""}>{item}</div>)
-        
+          return (<div key={idx} className={posicao > idx ? "letters posicao" : "letters"}>{item}</div>)
+
         })}</div>
-     
+
         <div className={showGame ? "timer" : ""}></div>
 
-        <button onClick={genRandom} className={showGame? "btn": ""}>Iniciar</button>
+        <button onClick={genRandom} className={showGame ? "btn" : ""}>Iniciar</button>
 
       </div>
     </>
