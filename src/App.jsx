@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import "./App.css"
+import "./App.css";
 
 function App() {
 
   const [random, setRandom] = useState([]);
   const [showGame, setShowGame] = useState(false)
   const [posicao, setPosicao] = useState(0)
+  const [err, setErrr] = useState([])
   let timer = null
-
 
   let globalArray = []
 
@@ -24,11 +24,9 @@ function App() {
     window.addEventListener("keyup", compareF);
 
     return () => {
-      window.removeEventListener("keyup", compareF)
+      window.removeEventListener("keyup", compareF);
     }
   }, [compareF])
-
-
 
   function genRandom() {
 
@@ -46,31 +44,25 @@ function App() {
   }
 
   function compareF(e) {
-
-
-
-
     const keyPressed = e.key.toUpperCase();
 
-    console.log(random);
-    console.log(keyPressed);
     // usando array do state
     if (random[posicao] == keyPressed) {
       setPosicao(posicao + 1)
       console.log(posicao)
+
+    } else if (random[posicao] != keyPressed) {
+      setErrr(posicao)
     }
 
-    if (random[5] == keyPressed) {
-      
-      setTimeout(()=>{
+    if (posicao >= 5 && random[5] == keyPressed) {
+
+      setTimeout(() => {
         alert("PARABÉNS!");
         setShowGame(false)
         clearTimeout(timer)
         setPosicao(0)
       }, 200)
-     
-
-     
     }
   }
 
@@ -79,7 +71,7 @@ function App() {
       <div className="container" >
         <div>{showGame && random.map((item, idx) => {
 
-          return (<div key={idx} className={posicao > idx ? "letters posicao" : "letters"}>{item}</div>)
+          return (<div key={idx} className={posicao > idx ? "letters posicao" : "letters" && err == idx ? "letters clasErr" : "letters"}>{item}</div>)
 
         })}</div>
 
