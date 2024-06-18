@@ -6,22 +6,29 @@ function App() {
   const [random, setRandom] = useState([]);
   const [showGame, setShowGame] = useState(false)
   const [posicao, setPosicao] = useState(0)
-  const [err, setErrr] = useState([])
+  const [err, setErrr] = useState(null)
   let timer = null
 
   let globalArray = []
 
   useEffect(() => {
-    timer = setTimeout(() => {
-      setShowGame(false)
-    }, 5000);
+    
+    if (showGame) {
+      
+      timer = setTimeout(() => {
+        setShowGame(false)
+        
+      }, 5000);
+    }
 
     return () => clearTimeout(timer)
 
   }, [showGame])
 
   useEffect(() => {
-    window.addEventListener("keyup", compareF);
+    if(showGame){
+      window.addEventListener("keyup", compareF);
+    }
 
     return () => {
       window.removeEventListener("keyup", compareF);
@@ -33,21 +40,24 @@ function App() {
     const randomIt = "A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z";
     const splitRandomIt = randomIt.split(",");
 
+    globalArray = []
+
     for (let i = 0; i < 6; i++) {
 
       const randomPosition = splitRandomIt[Math.floor(Math.random() * 25)];
       globalArray.push(randomPosition);
     }
-    setRandom(globalArray)
-    setShowGame(true)
-    setPosicao(0)
+    setRandom(globalArray);
+    setShowGame(true);
+    setPosicao(0);
+    setErrr(null);
   }
 
   function compareF(e) {
     const keyPressed = e.key.toUpperCase();
 
     // usando array do state
-    if (random[posicao] == keyPressed) {
+    if (random[posicao] === keyPressed) {
       setPosicao(posicao + 1)
       console.log(posicao)
 
@@ -55,13 +65,14 @@ function App() {
       setErrr(posicao)
     }
 
-    if (posicao >= 5 && random[5] == keyPressed) {
+    if (posicao >= 5 && random[5] === keyPressed) {
 
       setTimeout(() => {
         alert("PARABÉNS!");
+        setErrr(null)
+        setPosicao(0)
         setShowGame(false)
         clearTimeout(timer)
-        setPosicao(0)
       }, 200)
     }
   }
@@ -71,7 +82,7 @@ function App() {
       <div className="container" >
         <div>{showGame && random.map((item, idx) => {
 
-          return (<div key={idx} className={posicao > idx ? "letters posicao" : "letters" && err == idx ? "letters clasErr" : "letters"}>{item}</div>)
+          return (<div key={idx} className={posicao > idx ? "letters posicao" : "letters" && err === idx ? "letters clasErr" : "letters"}>{item}</div>)
 
         })}</div>
 
