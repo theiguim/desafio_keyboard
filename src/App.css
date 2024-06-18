@@ -8,7 +8,9 @@
 .btn{
   display: none;
 }
-
+.clasErr{
+  /* background-color: red; */
+}
 .container div{
   display: flex;
   /* padding: 10px; */
