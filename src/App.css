@@ -9,7 +9,7 @@
   display: none;
 }
 .clasErr{
-  /* background-color: red; */
+  background-color: red;
 }
 .container div{
   display: flex;
