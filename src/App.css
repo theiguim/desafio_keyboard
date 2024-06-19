@@ -1,34 +1,127 @@
 #root {
-  max-width: 1280px;
-  margin:auto;
-  padding: 2rem;
-  text-align: center;
+  flex: 1;
 }
 
-.btn{
-  /* display: none; */
-}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
 
-.posicao{
-  color: red;
-  background-color: blue;
-}
-.random{
-  background-color: orange;
-  color: white;
-}
-
-.timer{
-  height: 10px;
   width: 100%;
-  margin-bottom: 10px;
-  background-color: white;
-  animation: timer 5s;
+  height: 100%;
 }
 
-@keyframes timer {
-  to{
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.input-group input {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.btn {
+  padding: 8px 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #c4c4c4;
+}
+
+.letters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.letter {
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: all 0.5s;
+}
+
+.letter--selected {
+  transform: scale(1.1);
+}
+
+.letter--correct {
+  border-color: #52cf52;
+  animation: pulseSuccess 1s 1;
+}
+
+.letter--error {
+  animation: pulseError 1s 1;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.timer {
+  background-color: #f0f0f0;
+  width: 100%;
+  height: 10px;
+  border-radius: 4px;
+}
+
+.timer__progress {
+  background-color: #52cf52;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  animation: timerProgress 10s linear;
+}
+
+@keyframes timerProgress {
+  0% {
+    width: 100%;
+  }
+  100% {
     width: 0;
   }
 }
 
+@keyframes pulseError {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.688);
+  }
+  70% {
+    box-shadow: 0 0 0 0.625rem rgba(0, 0, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
+
+@keyframes pulseSuccess {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.582);
+  }
+  70% {
+    box-shadow: 0 0 0 0.625rem rgba(0, 0, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+}
